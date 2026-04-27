@@ -2,7 +2,7 @@
 
 A fully custom personal portfolio built with Next.js, featuring a 3D avatar, animated UI, interactive sections, and a clean data-driven architecture.
 
-**Live site:** [Rojin Lohrasbinejad]([https://rojinlohrasbinejad.vercel.app])
+**Live site:** [Rojin Lohrasbinejad](https://rojinlohrasbinejad.vercel.app)
 
 ---
 
