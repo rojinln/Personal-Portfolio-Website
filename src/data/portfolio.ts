@@ -79,7 +79,7 @@ export const portfolioData = {
     email: "mailto:rlohrasbinejad@gmail.com",
     linkedin: "https://www.linkedin.com/in/rojin-lohrasbinejad/",
     github: "https://github.com/rojinln",
-    resume: "https://www.linkedin.com/in/rojin-lohrasbinejad/",
+    resume: "/resume.pdf",
   },
   navLinks: [
     { label: "About", href: "#about" },
@@ -95,10 +95,9 @@ export const portfolioData = {
     { label: "View GitHub", href: "https://github.com/rojinln", external: true, variant: "secondary" },
     {
       label: "Download Resume",
-      href: "#", // TODO: replace with PDF resume URL when ready
+      href: "/resume.pdf",
       external: true,
       variant: "secondary",
-      hidden: true,
     },
     { label: "Contact Me", href: "#contact", variant: "secondary" },
   ] satisfies HeroAction[],
