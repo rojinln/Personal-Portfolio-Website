@@ -45,7 +45,7 @@ export function Hero() {
           <p className="mt-5 max-w-xl text-base leading-8 text-[#B8B5C8]">{portfolioData.bio}</p>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            {portfolioData.heroActions.filter((a) => !a.hidden).map((action) => (
+            {portfolioData.heroActions.map((action) => (
               <a
                 key={action.label}
                 href={action.href}
