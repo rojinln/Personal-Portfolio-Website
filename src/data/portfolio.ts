@@ -9,6 +9,7 @@ export type Quest = {
   place: string;
   dates: string;
   kind: "job" | "school";
+  tier: "main" | "side";
   loot: string[];
 };
 
@@ -29,29 +30,29 @@ export type SkillGroup = { title: string; icon: string; items: string[] };
 export const portfolio = {
   name: "Rojin Lohrasbinejad",
   handle: "rojin",
-  role: "Software Engineer",
-  subrole: "Backend · Data · ML",
+  role: "Software Developer",
+  subrole: "Backend · Cloud · Data",
   location: "Vancouver, BC",
   timezone: "America/Vancouver",
   tagline:
-    "I build backend systems, data pipelines and the occasional ML model, and I like them clean, fast and easy to reason about.",
+    "I build and debug production backends, REST APIs and real-time data systems, and I like them reliable, fast and easy to reason about.",
   bio: [
-    "I'm an early-career software engineer with a Computer Engineering degree from the University of Tehran and an MSc in Big Data from Simon Fraser University.",
-    "I've written C++ middleware for ATMs, shipped AWS backends and CI/CD pipelines, and built streaming data systems with Kafka and Spark. I care about systems that hold up under load and products that feel good to use.",
+    "I'm a software developer with a B.Sc. in Computer Engineering from the University of Tehran and an M.Sc. in Big Data from Simon Fraser University. Right now I'm a Client Engineer at Glia, keeping enterprise AI deployments healthy.",
+    "My path runs from C++ ATM software to AWS cloud services to real-time data platforms with Kafka and Spark. I care about systems that hold up under load, root causes over quick patches, and products that feel good to use.",
   ],
   // [GUESS] "Class" / "Level" style labels are playful framing for the game theme.
   playerCard: {
-    class: "Backend Engineer",
+    class: "Client Engineer @ Glia",
     level: "Lv. 26", // [GUESS] purely decorative, change or remove
     origin: "Tehran → Vancouver",
-    status: "Open to new-grad & junior SWE roles", // [GUESS] confirm what you're looking for
+    status: "Client Engineer at Glia, debugging APIs and cloud integrations for an enterprise AI platform",
   },
   stats: [
     { label: "Backend", value: 90 },
-    { label: "Data / ML", value: 82 },
-    { label: "Cloud", value: 78 },
-    { label: "Frontend", value: 70 },
-    { label: "Debugging", value: 95 },
+    { label: "Debugging", value: 96 },
+    { label: "Cloud", value: 80 },
+    { label: "Data", value: 84 },
+    { label: "Frontend", value: 72 },
   ], // [GUESS] stat values are decorative, not self-assessments you gave
   hobbies: [
     { icon: "📷", label: "Photography" },
@@ -62,8 +63,8 @@ export const portfolio = {
   achievements: [
     { title: "SFU Innovation Prize", detail: "2025 · BC Car Crash Predictor" },
     { title: "Rank #1, four years running", detail: "B.Eng Computer Engineering, University of Tehran" },
-    { title: "~25% faster app", detail: "Caching + lazy loading at PavePal" },
-    { title: "~15% lower latency", detail: "Multithreaded ATM sockets at PEBCO" },
+    { title: "~25% snappier maps", detail: "Geospatial rendering at PavePal" },
+    { title: "Shipped Bloom", detail: "Full-stack fitness & nutrition tracker" },
   ],
   links: {
     email: "mailto:rlohrasbinejad@gmail.com",
@@ -73,38 +74,66 @@ export const portfolio = {
     resume: "/resume.pdf",
   },
   nowBuilding: {
-    title: "iOS fitness companion",
-    detail: "Designing a SwiftUI app that unifies gym logs, nutrition, progress photos and Apple Watch data.",
-    progress: 30, // [GUESS] carried over from old site's "design phase" checklist (2 of 7 done)
+    title: "Bloom fitness tracker",
+    detail:
+      "My full-stack workout, cardio and nutrition tracker. The MVP is built and working; now I'm hardening it for a real deploy.",
+    progress: 80, // [GUESS] confirm how far along you'd call it
     checklist: [
-      { label: "Problem statement & product direction", done: true },
-      { label: "Core feature map", done: true },
-      { label: "Architecture & data model", done: false },
-      { label: "First SwiftUI prototype", done: false },
-      { label: "User testing", done: false },
+      { label: "Auth, database & typed API", done: true },
+      { label: "Workout, cardio & meal logging", done: true },
+      { label: "Progress dashboard & suggestions", done: true },
+      { label: "Installable on iPhone home screen", done: true },
+      { label: "Move to Postgres & deploy publicly", done: false }, // [GUESS]
     ],
   },
   quests: [
     {
-      title: "Software Engineer Co-op",
-      org: "PavePal Electronics",
-      place: "Vancouver, Canada",
-      dates: "Apr 2025 – Aug 2025",
+      title: "Client Engineer",
+      org: "Glia",
+      place: "Vancouver, BC",
+      dates: "Aug 2026 – Present",
       kind: "job",
+      tier: "main",
       loot: [
-        "Built and maintained CI/CD pipelines for build, test and deploy",
-        "Shipped backend services on AWS Lambda, EC2 and Cognito",
-        "Cut latency on large datasets ~25% with caching and lazy loading",
-        "Wrote unit tests and took part in code reviews",
+        "Debug REST APIs, backend services and cloud integrations for an enterprise AI platform with SQL, logs and network analysis",
+        "Technical point of contact for production issues, keeping enterprise deployments unblocked",
+        "Drive customer escalations end to end, from reproduction to root cause",
+        "Partner with Product and Engineering through JIRA to reproduce defects and set priorities",
       ],
     },
     {
-      title: "MSc, Big Data",
+      title: "M.Sc., Big Data",
       org: "Simon Fraser University",
-      place: "Burnaby, Canada",
+      place: "Burnaby, BC",
       dates: "Sep 2024 – Dec 2025",
       kind: "school",
-      loot: ["Distributed & Cloud Systems, Machine Learning, NLP, Big Data Lab", "SFU Innovation Prize 2025"],
+      tier: "main",
+      loot: [
+        "Big Data Lab 1 & 2, Machine Learning, NLP, Distributed & Cloud Systems",
+        "SFU Innovation Prize 2025 for the BC Car Crash Predictor",
+      ],
+    },
+    {
+      title: "B.Sc., Computer Engineering",
+      org: "University of Tehran",
+      place: "Tehran, Iran",
+      dates: "Graduated Jun 2024",
+      kind: "school",
+      tier: "main",
+      loot: ["Ranked first in my graduating cohort for four consecutive years"],
+    },
+    {
+      title: "Software Engineer, Co-op",
+      org: "PavePal",
+      place: "Vancouver, BC",
+      dates: "Apr 2025 – Aug 2025",
+      kind: "job",
+      tier: "side",
+      loot: [
+        "Built features on the full-stack team modernizing a global geospatial platform for municipal clients",
+        "Sped up map rendering and interaction latency by ~25%",
+        "Engineered AWS region-scoped auth for secure multi-tenant deployments",
+      ],
     },
     {
       title: "Software Developer",
@@ -112,27 +141,21 @@ export const portfolio = {
       place: "Tehran, Iran",
       dates: "Sep 2021 – Aug 2022",
       kind: "job",
+      tier: "side",
       loot: [
-        "C++ middleware connecting ATM client software to hardware devices",
-        "Multithreaded ATM↔server sockets, ~15% lower latency at peak",
-        "Tests and docs that led to ~23% cost savings",
+        "Built and maintained C++ ATM software for transaction processing and banking-cluster communication",
+        "Integrated transaction workflows between ATM terminals and banking services",
+        "Used SQL to investigate records, reconcile discrepancies and fix processing failures",
       ],
     },
     {
-      title: "Software Developer Intern",
+      title: "Software Developer, Intern",
       org: "PEBCO Electronics",
       place: "Tehran, Iran",
       dates: "Jun 2021 – Aug 2021",
       kind: "job",
-      loot: ["Internal ATM testing & monitoring tools", "Better real-time error logging for faster debugging"],
-    },
-    {
-      title: "B.Eng, Computer Engineering",
-      org: "University of Tehran",
-      place: "Kish, Iran",
-      dates: "Sep 2020 – Jun 2024",
-      kind: "school",
-      loot: ["Ranked 1st in the program for four consecutive years"],
+      tier: "side",
+      loot: ["Built ATM testing, monitoring and real-time error-logging tools that sped up debugging"],
     },
   ] satisfies Quest[],
   projects: [
@@ -146,13 +169,28 @@ export const portfolio = {
         { label: "Accuracy", value: "86%" },
         { label: "Sources", value: "4" },
       ],
-      stack: ["Kafka", "Spark", "PySpark ML", "Redis", "AWS", "Docker", "Tableau"],
+      stack: ["Kafka", "Spark", "PySpark MLlib", "Redis", "Tableau"],
       badge: "SFU Innovation Prize 2025",
       color: "pink",
       links: [],
     },
     {
       slot: "02",
+      title: "Bloom · Fitness Tracker",
+      tag: "Full-stack",
+      blurb:
+        "A mobile-first tracker for workouts with per-set progressive overload, cardio, meals with photos and body-weight goals, plus a day/week/month dashboard and rule-based suggestions. Installs to an iPhone home screen.",
+      stats: [
+        { label: "Status", value: "MVP built" },
+        { label: "Logic", value: "Unit-tested" },
+      ],
+      stack: ["Next.js", "TypeScript", "Prisma", "Zod", "JWT auth", "Tailwind"],
+      badge: "New",
+      color: "mint",
+      links: [{ label: "Source", href: "https://github.com/rojinln/Fitness-Tracker", external: true }],
+    },
+    {
+      slot: "03",
       title: "Trivia QA over Literature",
       tag: "NLP · RAG",
       blurb:
@@ -166,8 +204,8 @@ export const portfolio = {
       links: [],
     },
     {
-      slot: "03",
-      title: "Crypto Market Analysis",
+      slot: "04",
+      title: "Crypto Market Analytics",
       tag: "Big Data",
       blurb:
         "Streams live Coinbase candles through an ETL pipeline into ClickHouse and Spark, with trend analysis (Hurst on TWAP/VWAP) and volume-spike anomaly detection in Grafana.",
@@ -180,7 +218,7 @@ export const portfolio = {
       links: [],
     },
     {
-      slot: "04",
+      slot: "05",
       title: "This Portfolio",
       tag: "Frontend",
       blurb:
@@ -190,17 +228,17 @@ export const portfolio = {
         { label: "Data", value: "1 file" },
       ],
       stack: ["Next.js", "React", "TypeScript", "Tailwind"],
-      color: "mint",
+      color: "pink",
       links: [{ label: "Source", href: "https://github.com/rojinln/Personal-Portfolio-Website", external: true }],
     },
   ] satisfies Project[],
   skills: [
-    { title: "Languages", icon: "⌨", items: ["TypeScript", "JavaScript", "Python", "Java", "C++", "SQL"] },
-    { title: "Web", icon: "◈", items: ["React", "Next.js", "Node.js", "REST APIs"] },
-    { title: "Cloud & Infra", icon: "☁", items: ["AWS Lambda", "EC2", "S3", "CDK", "Cognito", "Docker", "Kubernetes", "CI/CD", "Linux"] },
-    { title: "Data", icon: "▦", items: ["PostgreSQL", "MySQL", "Kafka", "Spark", "ClickHouse", "Redis"] },
-    { title: "ML / AI", icon: "✦", items: ["PySpark ML", "RAG", "FAISS", "Hugging Face", "Model evaluation"] },
-    { title: "Practices", icon: "♥", items: ["Unit testing", "Code review", "Agile", "Debugging", "Distributed systems"] },
+    { title: "Languages", icon: "⌨", items: ["Python", "C++", "TypeScript", "JavaScript", "SQL"] },
+    { title: "Backend", icon: "◈", items: ["REST APIs", "FastAPI", "Node.js", "PostgreSQL", "Redis", "API integration"] },
+    { title: "Cloud & DevOps", icon: "☁", items: ["AWS Lambda", "Cognito", "S3", "CloudWatch", "AppConfig", "CDK", "Docker", "CI/CD", "Git"] },
+    { title: "Data", icon: "▦", items: ["Kafka", "Spark", "ClickHouse", "pandas", "NumPy", "Grafana"] },
+    { title: "ML / AI", icon: "✦", items: ["scikit-learn", "PySpark MLlib", "RAG", "FAISS", "Hugging Face"] },
+    { title: "Frontend & Tools", icon: "♥", items: ["React", "Next.js", "Tailwind", "Postman", "JIRA"] },
   ] satisfies SkillGroup[],
   partyTraits: [
     { id: "ships", label: "Ships working software", line: "ships things that actually work" },

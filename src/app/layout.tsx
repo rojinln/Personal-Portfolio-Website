@@ -7,9 +7,9 @@ const terminal = VT323({ variable: "--font-term", weight: "400", subsets: ["lati
 const body = Nunito({ variable: "--font-body", subsets: ["latin"], weight: ["400", "600", "700", "800", "900"] });
 
 export const metadata: Metadata = {
-  title: "Rojin Lohrasbinejad · Software Engineer",
+  title: "Rojin Lohrasbinejad · Software Developer",
   description:
-    "Rojin Lohrasbinejad, software engineer in Vancouver working on backend systems, data pipelines and machine learning.",
+    "Rojin Lohrasbinejad, software developer in Vancouver working on backend systems, cloud services and real-time data platforms.",
 };
 
 export const viewport: Viewport = { themeColor: "#0c0812" };

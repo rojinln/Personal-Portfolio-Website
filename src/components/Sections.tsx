@@ -79,25 +79,31 @@ export function Player() {
   );
 }
 
-export function Quests() {
+function QuestList({ tier }: { tier: "main" | "side" }) {
+  const main = tier === "main";
   return (
-    <Stage id="quests" stage="STAGE 2" title="Quest log" kicker="Jobs and degrees, newest first, with the loot I came back with.">
-      <ol className="relative space-y-6 border-l-[3px] border-dashed border-line pl-6 sm:pl-10">
-        {portfolio.quests.map((q) => {
-          const job = q.kind === "job";
+    <ol className="relative space-y-6 border-l-[3px] border-dashed border-line pl-6 sm:pl-10">
+      {portfolio.quests
+        .filter((q) => q.tier === tier)
+        .map((q, i) => {
+          const active = q.dates.includes("Present");
+          const label = q.kind === "school" ? "MAIN QUEST · TRAINING" : main ? "MAIN QUEST" : "SIDE QUEST";
+          const color = q.kind === "school" ? "text-lilac" : main ? "text-pink" : "text-mint";
+          const dot = q.kind === "school" ? "bg-lilac" : main ? "bg-pink" : "bg-mint";
           return (
             <li key={q.title + q.dates} className="reveal relative">
               <span
-                className={`absolute -left-[37px] top-6 h-5 w-5 rotate-45 border-[3px] border-bg sm:-left-[53px] ${job ? "bg-pink" : "bg-lilac"}`}
+                className={`absolute -left-[37px] top-6 h-5 w-5 rotate-45 border-[3px] border-bg sm:-left-[53px] ${dot} ${active ? "shadow-[0_0_14px_var(--pink)]" : ""}`}
                 aria-hidden
               />
-              <article className="pixel-box p-5 sm:p-6">
+              <article className={`pixel-box p-5 sm:p-6 ${main && i === 0 ? "pixel-box--pink" : ""}`}>
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
-                    <p className={`font-pixel text-[0.55rem] ${job ? "text-pink" : "text-lilac"}`}>
-                      {job ? "MAIN QUEST" : "TRAINING ARC"}
+                    <p className={`font-pixel text-[0.55rem] ${color}`}>
+                      {label}
+                      {active ? <span className="ml-2 text-gold">· ACTIVE</span> : null}
                     </p>
-                    <h3 className="mt-2 text-xl font-extrabold text-text">{q.title}</h3>
+                    <h3 className={`mt-2 font-extrabold text-text ${main ? "text-xl" : "text-lg"}`}>{q.title}</h3>
                     <p className="text-muted">
                       {q.org} · {q.place}
                     </p>
@@ -118,7 +124,17 @@ export function Quests() {
             </li>
           );
         })}
-      </ol>
+    </ol>
+  );
+}
+
+export function Quests() {
+  return (
+    <Stage id="quests" stage="STAGE 2" title="Quest log" kicker="My current job and degrees are the main storyline. Earlier roles are the side quests that levelled me up.">
+      <h3 className="font-pixel reveal mb-6 text-[0.7rem] text-pink">▸ MAIN QUESTS</h3>
+      <QuestList tier="main" />
+      <h3 className="font-pixel reveal mb-6 mt-14 text-[0.7rem] text-mint">▸ SIDE QUESTS</h3>
+      <QuestList tier="side" />
     </Stage>
   );
 }
