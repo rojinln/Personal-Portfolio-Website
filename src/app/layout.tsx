@@ -1,33 +1,23 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Nunito, Press_Start_2P, VT323 } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const pixel = Press_Start_2P({ variable: "--font-pixel", weight: "400", subsets: ["latin"] });
+const terminal = VT323({ variable: "--font-term", weight: "400", subsets: ["latin"] });
+const body = Nunito({ variable: "--font-body", subsets: ["latin"], weight: ["400", "600", "700", "800", "900"] });
 
 export const metadata: Metadata = {
-  title: "Rojin Lohrasbinejad | Portfolio",
-  description: "Software Engineer specializing in data-driven solutions, machine learning, and full-stack development.",
+  title: "Rojin Lohrasbinejad · Software Developer",
+  description:
+    "Rojin Lohrasbinejad, software developer in Vancouver working on backend systems, cloud services and real-time data platforms.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export const viewport: Viewport = { themeColor: "#0c0812" };
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full bg-[#070B16] text-[#F8FAFC]">{children}</body>
+    <html lang="en" className={`${pixel.variable} ${terminal.variable} ${body.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }
