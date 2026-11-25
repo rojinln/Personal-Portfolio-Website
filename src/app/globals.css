@@ -308,3 +308,12 @@ a.gloss-tile:hover,
     transition: none !important;
   }
 }
+
+/* page switch: quick stepped slide-in, like a menu screen changing */
+.page-in {
+  animation: page-in 0.35s steps(6) both;
+}
+
+@keyframes page-in {
+  from { opacity: 0; transform: translateX(24px); }
+}

@@ -21,16 +21,33 @@ const PLATFORMS = [
   { x1: 198, x2: 262, y: 122 }, // coffee table
 ];
 
+const BASE_PX = 2;
+const MAX_SIZE = 1.6;
+const GROW_STEP = 0.15;
+const FOOD_LIFETIME = 6;
+
 const YARN_COLORS = ["#ff5fae", "#b79cff", "#7ff5c3", "#ffd866", "#ff9a6b", "#7cc8ff"];
 
 type Keys = { left: boolean; right: boolean; up: boolean; down: boolean };
 type Yarn = { x: number; y: number; vx: number; vy: number; color: string; bounces: number; age: number; alive: boolean };
 type Mouse = { x: number; y: number; dir: 1 | -1; speed: number; alive: boolean };
 type Pop = { x: number; y: number; text: string; color: string; age: number };
-type Kitty = { x: number; y: number; vy: number; face: 1 | -1; grounded: boolean; dropUntil: number; walk: number };
+type Kitty = {
+  x: number;
+  y: number;
+  vy: number;
+  face: 1 | -1;
+  grounded: boolean;
+  dropUntil: number;
+  walk: number;
+  size: number; // 1 = normal, grows with food up to MAX_SIZE
+};
+type Food = { x: number; y: number; age: number; alive: boolean };
 
 type World = {
   kitty: Kitty;
+  food: Food[];
+  nextFood: number;
   yarns: Yarn[];
   mice: Mouse[];
   pops: Pop[];
@@ -43,7 +60,9 @@ type World = {
 };
 
 const freshWorld = (): World => ({
-  kitty: { x: 160, y: FLOOR, vy: 0, face: 1, grounded: true, dropUntil: 0, walk: 0 },
+  kitty: { x: 160, y: FLOOR, vy: 0, face: 1, grounded: true, dropUntil: 0, walk: 0, size: 1 },
+  food: [],
+  nextFood: 7 + Math.random() * 4,
   yarns: [],
   mice: [],
   pops: [],
@@ -80,6 +99,9 @@ const KITTY_PAL: Record<string, string> = {
   B: "#ff9cc9",
 };
 
+const FISH = [".......P.", "..OOO.PP.", ".OOOOOPP.", "OEOOOOOP.", ".OOOOOPP.", "..OOO.PP.", ".......P."];
+const FISH_PAL: Record<string, string> = { O: "#ff9a6b", P: "#ffd866", E: "#2a1236" };
+
 const MOUSE = ["..EE....", ".EGGGG..", "GGGGGGGD", "GGGGGGG.", ".G..G..."];
 const MOUSE_PAL: Record<string, string> = { G: "#9b93a8", E: "#ffb3da", D: "#2a1236" };
 
@@ -99,7 +121,10 @@ function drawSprite(
       const col = pal[ch];
       if (!col) continue;
       ctx.fillStyle = col;
-      ctx.fillRect(Math.round(x) + (flip ? w - 1 - c : c) * px, Math.round(y) + r * px, px, px);
+      const col0 = flip ? w - 1 - c : c;
+      const x0 = Math.round(x + col0 * px);
+      const y0 = Math.round(y + r * px);
+      ctx.fillRect(x0, y0, Math.round(x + (col0 + 1) * px) - x0, Math.round(y + (r + 1) * px) - y0);
     }
   }
 }
@@ -227,7 +252,9 @@ function stepWorld(w: World, key: Keys, dt: number) {
 
   // --- kitty movement ---
   const dir = (key.right ? 1 : 0) - (key.left ? 1 : 0);
-  k.x = Math.min(W - 14, Math.max(14, k.x + dir * RUN_SPEED * dt));
+  const px = BASE_PX * k.size;
+  const halfW = 7 * px;
+  k.x = Math.min(W - halfW, Math.max(halfW, k.x + dir * RUN_SPEED * dt));
   if (dir !== 0) {
     k.face = dir as 1 | -1;
     k.walk += dt;
@@ -290,7 +317,8 @@ function stepWorld(w: World, key: Keys, dt: number) {
     w.nextMouse = w.t + 6 + Math.random() * 6;
   }
 
-  const catchAt = (x: number, y: number, r: number) => Math.abs(x - k.x) < 14 + r && Math.abs(y - (k.y - 11)) < 11 + r;
+  const halfH = 5.5 * px;
+  const catchAt = (x: number, y: number, r: number) => Math.abs(x - k.x) < halfW + r && Math.abs(y - (k.y - halfH)) < halfH + r;
 
   // --- yarn physics ---
   for (const y of w.yarns) {
@@ -341,6 +369,33 @@ function stepWorld(w: World, key: Keys, dt: number) {
   }
   w.mice = w.mice.filter((m) => m.alive);
 
+  // --- food: appears on a random surface, makes the kitty grow (capped) ---
+  if (w.t >= w.nextFood) {
+    const spots = [
+      { x1: 24, x2: W - 24, y: FLOOR },
+      { x1: PLATFORMS[0].x1 + 10, x2: PLATFORMS[0].x2 - 10, y: PLATFORMS[0].y },
+      { x1: PLATFORMS[1].x1 + 10, x2: PLATFORMS[1].x2 - 10, y: PLATFORMS[1].y },
+    ];
+    const s = spots[Math.floor(Math.random() * spots.length)];
+    w.food.push({ x: s.x1 + Math.random() * (s.x2 - s.x1), y: s.y, age: 0, alive: true });
+    w.nextFood = w.t + 9 + Math.random() * 6;
+  }
+  for (const f of w.food) {
+    f.age += dt;
+    if (f.age > FOOD_LIFETIME) f.alive = false;
+    else if (catchAt(f.x, f.y - 6, 5)) {
+      f.alive = false;
+      w.score += 5;
+      if (k.size < MAX_SIZE - 0.01) {
+        k.size = Math.min(MAX_SIZE, k.size + GROW_STEP);
+        w.pops.push({ x: f.x, y: f.y - 16, text: k.size >= MAX_SIZE - 0.01 ? "MAX SIZE!" : "YUM! +5", color: "#ff9a6b", age: 0 });
+      } else {
+        w.pops.push({ x: f.x, y: f.y - 16, text: "SO FULL +5", color: "#ff9a6b", age: 0 });
+      }
+    }
+  }
+  w.food = w.food.filter((f) => f.alive);
+
   for (const p of w.pops) p.age += dt;
   w.pops = w.pops.filter((p) => p.age < 1);
 }
@@ -385,6 +440,12 @@ export function YarnGame() {
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(roomRef.current, 0, 0);
 
+    w.food.forEach((f) => {
+      // blink during the last 1.5s so players know it's about to vanish
+      if (f.age > FOOD_LIFETIME - 1.5 && Math.floor(f.age * 8) % 2 === 0) return;
+      const bob = Math.round(Math.sin(f.age * 6) * 1.5);
+      drawSprite(ctx, FISH, FISH_PAL, f.x - 9, f.y - 15 + bob);
+    });
     w.mice.forEach((m) => drawSprite(ctx, MOUSE, MOUSE_PAL, m.x - 8, m.y - 10, m.dir === -1));
     w.yarns.forEach((y) => {
       ctx.globalAlpha = y.age > 5 ? Math.max(0, 1 - (y.age - 5) * 2) : 1;
@@ -394,7 +455,8 @@ export function YarnGame() {
 
     const k = w.kitty;
     const frame = k.grounded && Math.floor(k.walk * 8) % 2 === 1 ? KITTY_B : KITTY_A;
-    drawSprite(ctx, frame, KITTY_PAL, k.x - 16, k.y - 22, k.face === -1);
+    const kpx = BASE_PX * k.size;
+    drawSprite(ctx, frame, KITTY_PAL, k.x - 8 * kpx, k.y - 11 * kpx, k.face === -1, kpx);
 
     const pixelFont = getComputedStyle(document.body).getPropertyValue("--font-pixel") || "monospace";
     ctx.font = `8px ${pixelFont}`;
@@ -512,7 +574,7 @@ export function YarnGame() {
       id="arcade"
       stage="ARCADE"
       title="Kitty yarn catch"
-      kicker="Help the kitty catch falling yarn before it rolls away. Mice are worth extra if you're quick. You have 60 seconds."
+      kicker="Help the kitty catch falling yarn before it rolls away. Mice are worth extra, and snacks help the kitty grow (but only so big). You have 60 seconds."
     >
       <div className="pixel-box pixel-box--pink reveal p-3 sm:p-5">
         {/* scoreboard */}

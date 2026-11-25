@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { portfolio } from "@/data/portfolio";
 import { Avatar } from "./Avatar";
+import { goToPage } from "./pages";
 
 export function TitleScreen() {
   const [flash, setFlash] = useState(false);
@@ -10,7 +11,7 @@ export function TitleScreen() {
   const start = () => {
     setFlash(true);
     setTimeout(() => {
-      document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" });
+      goToPage("menu");
       setFlash(false);
     }, 280);
   };
@@ -57,7 +58,7 @@ export function TitleScreen() {
           </div>
 
           <p className="font-pixel mt-10 hidden text-[0.55rem] text-dim sm:block">
-            <span className="blink">▌</span> PRESS ENTER OR SCROLL TO CONTINUE
+            <span className="blink">▌</span> PRESS ENTER OR NEXT TO CONTINUE
           </p>
         </div>
 

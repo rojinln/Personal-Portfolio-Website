@@ -1,5 +1,6 @@
 import { Hud } from "@/components/Hud";
 import { MenuGrid } from "@/components/MenuGrid";
+import { Pager } from "@/components/Pager";
 import { PartySelect } from "@/components/PartySelect";
 import { Continue, Footer, Inventory, NowBuilding, Player, Quests, Saves } from "@/components/Sections";
 import { TitleScreen } from "@/components/TitleScreen";
@@ -30,23 +31,27 @@ export default function Home() {
       <div className="scanlines" aria-hidden />
 
       <Hud />
+      {/* Each child is one "page"; order must match PAGES in components/pages.ts */}
       <main className="relative z-10">
-        <TitleScreen />
-        <DotTrail />
-        <MenuGrid />
-        <DotTrail />
-        <Player />
-        <Quests />
-        <DotTrail />
-        <Saves />
-        <Inventory />
-        <NowBuilding />
-        <PartySelect />
-        <YarnGame />
-        <DotTrail />
-        <Continue />
+        <Pager>
+          <TitleScreen />
+          <div className="pt-12">
+            <MenuGrid />
+          </div>
+          <Player />
+          <Quests />
+          <Saves />
+          <Inventory />
+          <NowBuilding />
+          <PartySelect />
+          <YarnGame />
+          <>
+            <Continue />
+            <DotTrail />
+            <Footer />
+          </>
+        </Pager>
       </main>
-      <Footer />
     </>
   );
 }

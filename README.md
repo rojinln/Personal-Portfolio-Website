@@ -1,6 +1,6 @@
 # Personal Portfolio Website
 
-A retro, game-menu styled portfolio: dark background, pink accents, pixel fonts and early-2000s console UI touches (title screen, channel menu, quest log, save files, inventory).
+A retro, game-menu styled portfolio: dark background, pink accents, pixel fonts and early-2000s console UI touches (title screen, channel menu, quest log, save files, inventory, a kitty mini game). Sections are shown one at a time as "pages" addressed by URL hash (`/#quests`), with Previous / Next buttons; the page order lives in `src/components/pages.ts`.
 
 **Live site:** [Rojin Lohrasbinejad](https://rojinlohrasbinejad.vercel.app)
 
