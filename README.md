@@ -1,6 +1,6 @@
 # Personal Portfolio Website
 
-A fully custom personal portfolio built with Next.js, featuring a 3D avatar, animated UI, interactive sections, and a clean data-driven architecture.
+A retro, game-menu styled portfolio: dark background, pink accents, pixel fonts and early-2000s console UI touches (title screen, channel menu, quest log, save files, inventory).
 
 **Live site:** [Rojin Lohrasbinejad](https://rojinlohrasbinejad.vercel.app)
 
@@ -8,33 +8,24 @@ A fully custom personal portfolio built with Next.js, featuring a 3D avatar, ani
 
 ## Stack
 
-- **Framework:** Next.js (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS
-- **Animations:** Framer Motion
-- **3D:** Three.js (via React Three Fiber)
-- **Icons:** Lucide React
+- **Framework:** Next.js (App Router), TypeScript
+- **Styling:** Tailwind CSS v4 + a few hand-written retro primitives in `globals.css`
+- **Fonts:** Press Start 2P (headings), VT323 (terminal text), Nunito (body)
+- **Art:** original pixel sprites drawn as SVG from text grids (`src/components/ui.tsx`, `Avatar.tsx`)
 
 ## Project Structure
 
 ```
 src/
-├── app/                  # Next.js app router (layout, page)
-├── components/
-│   ├── layout/           # Navbar, Footer, BackgroundScene
-│   ├── sections/         # Page sections (Hero, About, Experience, etc.)
-│   ├── three/            # 3D components (GirlAvatar, GlowingSphere)
-│   └── ui/               # Reusable UI primitives (GlassCard, Pill, Section)
-├── data/
-│   └── portfolio.ts      # Single source of truth for all content
-└── lib/
-    ├── motion.ts         # Shared Framer Motion variants
-    └── utils.ts          # Utility helpers
+├── app/            # layout, page, globals.css (theme tokens + retro primitives)
+├── components/     # Hud, TitleScreen, MenuGrid, Sections, PartySelect, Clock, Avatar, ui
+└── data/
+    └── portfolio.ts  # all site content
 ```
 
 ## Content
 
-All site content lives in `src/data/portfolio.ts` — name, bio, experience, projects, skills, and links. Editing that file updates the entire site.
+All content lives in `src/data/portfolio.ts`. Lines marked `[GUESS]` were filled in during the redesign and should be double-checked.
 
 ## Running Locally
 

@@ -1,31 +1,50 @@
-import { BackgroundScene } from "@/components/layout/BackgroundScene";
-import { Footer } from "@/components/layout/Footer";
-import { Navbar } from "@/components/layout/Navbar";
-import { About } from "@/components/sections/About";
-import { Contact } from "@/components/sections/Contact";
-import { CurrentWork } from "@/components/sections/CurrentWork";
-import { Experience } from "@/components/sections/Experience";
-import { Hero } from "@/components/sections/Hero";
-import { HireSimulator } from "@/components/sections/HireSimulator";
-import { Projects } from "@/components/sections/Projects";
-import { Skills } from "@/components/sections/Skills";
+import { Hud } from "@/components/Hud";
+import { MenuGrid } from "@/components/MenuGrid";
+import { PartySelect } from "@/components/PartySelect";
+import { Continue, Footer, Inventory, NowBuilding, Player, Quests, Saves } from "@/components/Sections";
+import { TitleScreen } from "@/components/TitleScreen";
+import { DotTrail } from "@/components/ui";
+
+// Deterministic star positions so server and client render the same thing.
+const STARS = Array.from({ length: 40 }, (_, i) => ({
+  left: (i * 37.3) % 100,
+  top: (i * 61.7) % 100,
+  d: 2 + (i % 5),
+  delay: (i % 7) * 0.4,
+}));
 
 export default function Home() {
   return (
-    <div className="relative">
-      <BackgroundScene />
-      <Navbar />
-      <main className="relative z-10 overflow-hidden">
-        <Hero />
-        <About />
-        <Experience />
-        <Skills />
-        <Projects />
-        <CurrentWork />
-        <HireSimulator />
-        <Contact />
+    <>
+      <div className="bg-grid" aria-hidden />
+      <div className="pointer-events-none fixed inset-0 z-0" aria-hidden>
+        {STARS.map((s, i) => (
+          <span
+            key={i}
+            className="star"
+            style={{ left: `${s.left}%`, top: `${s.top}%`, ["--d" as string]: `${s.d}s`, ["--delay" as string]: `${s.delay}s` }}
+          />
+        ))}
+      </div>
+      <div className="scanlines" aria-hidden />
+
+      <Hud />
+      <main className="relative z-10">
+        <TitleScreen />
+        <DotTrail />
+        <MenuGrid />
+        <DotTrail />
+        <Player />
+        <Quests />
+        <DotTrail />
+        <Saves />
+        <Inventory />
+        <NowBuilding />
+        <PartySelect />
+        <DotTrail />
+        <Continue />
       </main>
       <Footer />
-    </div>
+    </>
   );
 }
