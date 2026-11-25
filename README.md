@@ -39,3 +39,5 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ## Deployment
 
 Deployed on [Vercel](https://vercel.com). Every push to `main` triggers an automatic redeployment.
+
+## Feel free to use this repo and customize it for yourself :) 
