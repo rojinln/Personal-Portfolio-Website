@@ -40,10 +40,9 @@ export const portfolio = {
     "I'm a software developer with a B.Sc. in Computer Engineering from the University of Tehran and an M.Sc. in Big Data from Simon Fraser University. Right now I'm a Client Engineer at Glia, keeping enterprise AI deployments healthy.",
     "My path runs from C++ ATM software to AWS cloud services to real-time data platforms with Kafka and Spark. I care about systems that hold up under load, root causes over quick patches, and products that feel good to use.",
   ],
-  // [GUESS] "Class" / "Level" style labels are playful framing for the game theme.
   playerCard: {
     class: "Client Engineer @ Glia",
-    level: "Lv. 26", // [GUESS] purely decorative, change or remove
+    level: "Lv. 3", 
     origin: "Tehran → Vancouver",
     status: "Client Engineer at Glia, debugging APIs and cloud integrations for an enterprise AI platform",
   },
@@ -53,11 +52,11 @@ export const portfolio = {
     { label: "Cloud", value: 80 },
     { label: "Data", value: 84 },
     { label: "Frontend", value: 72 },
-  ], // [GUESS] stat values are decorative, not self-assessments you gave
+  ],
   hobbies: [
     { icon: "📷", label: "Photography" },
-    { icon: "🏺", label: "Pottery" },
-    { icon: "🏠", label: "Life-sim games" },
+    { icon: "🎸", label: "Fromer Guitar Player" },
+    { icon: "🏠", label: "Sims games" },
     { icon: "🏎️", label: "F1 (Ferrari, sadly)" },
   ],
   achievements: [
@@ -77,13 +76,12 @@ export const portfolio = {
     title: "Bloom fitness tracker",
     detail:
       "My full-stack workout, cardio and nutrition tracker. The MVP is built and working; now I'm hardening it for a real deploy.",
-    progress: 80, // [GUESS] confirm how far along you'd call it
+    progress: 80, 
     checklist: [
       { label: "Auth, database & typed API", done: true },
       { label: "Workout, cardio & meal logging", done: true },
       { label: "Progress dashboard & suggestions", done: true },
-      { label: "Installable on iPhone home screen", done: true },
-      { label: "Move to Postgres & deploy publicly", done: false }, // [GUESS]
+      { label: "Move to Postgres & deploy publicly", done: false }, 
     ],
   },
   quests: [
