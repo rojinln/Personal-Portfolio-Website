@@ -67,7 +67,6 @@ export function MenuGrid() {
           <p className="font-pixel text-[0.62rem] text-gold">★ MAIN MENU ★</p>
           <h2 className="font-pixel text-glow mt-3 text-xl text-pink-soft sm:text-2xl">Select a channel</h2>
         </div>
-        <p className="font-term hidden text-xl text-dim sm:block">◂ ▸ to browse · Ⓐ to select</p>
       </div>
 
       <div className="reveal grid auto-rows-[minmax(150px,auto)] grid-cols-2 gap-4 lg:grid-cols-4">

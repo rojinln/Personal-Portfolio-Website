@@ -97,7 +97,6 @@ export const portfolio = {
       loot: [
         "Debug REST APIs, backend services and cloud integrations for an enterprise AI platform with SQL, logs and network analysis",
         "Technical point of contact for production issues, keeping enterprise deployments unblocked",
-        "Drive customer escalations end to end, from reproduction to root cause",
         "Partner with Product and Engineering through JIRA to reproduce defects and set priorities",
       ],
     },

@@ -3,6 +3,7 @@ import { MenuGrid } from "@/components/MenuGrid";
 import { PartySelect } from "@/components/PartySelect";
 import { Continue, Footer, Inventory, NowBuilding, Player, Quests, Saves } from "@/components/Sections";
 import { TitleScreen } from "@/components/TitleScreen";
+import { YarnGame } from "@/components/YarnGame";
 import { DotTrail } from "@/components/ui";
 
 // Deterministic star positions so server and client render the same thing.
@@ -41,6 +42,7 @@ export default function Home() {
         <Inventory />
         <NowBuilding />
         <PartySelect />
+        <YarnGame />
         <DotTrail />
         <Continue />
       </main>

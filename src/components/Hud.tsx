@@ -9,6 +9,7 @@ const NAV: { label: string; href: string; external?: boolean }[] = [
   { label: "Quests", href: "#quests" },
   { label: "Saves", href: "#saves" },
   { label: "Items", href: "#inventory" },
+  { label: "Arcade", href: "#arcade" },
   { label: "Contact", href: "#continue" },
   { label: "Resume", href: "/resume.pdf", external: true },
 ];
@@ -17,6 +18,16 @@ const NAV: { label: string; href: string; external?: boolean }[] = [
 export function Hud() {
   const [score, setScore] = useState(0);
   const [open, setOpen] = useState(false);
+
+  // Hide the floating back-to-top button while the arcade is on screen so it never covers the game controls.
+  const [arcadeVisible, setArcadeVisible] = useState(false);
+  useEffect(() => {
+    const el = document.getElementById("arcade");
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setArcadeVisible(e.isIntersecting), { threshold: 0.15 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -41,7 +52,7 @@ export function Hud() {
             <span className="font-pixel text-[0.62rem] text-pink-soft">ROJIN.EXE</span>
           </a>
 
-          <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
+          <nav className="hidden items-center gap-1 lg:flex" aria-label="Main">
             {NAV.map((n) => (
               <a
                 key={n.href}
@@ -61,7 +72,7 @@ export function Hud() {
             </p>
             <button
               type="button"
-              className="font-pixel rounded border-2 border-line px-3 py-2 text-[0.58rem] text-pink-soft md:hidden"
+              className="font-pixel rounded border-2 border-line px-3 py-2 text-[0.58rem] text-pink-soft lg:hidden"
               aria-expanded={open}
               aria-controls="mobile-nav"
               onClick={() => setOpen((v) => !v)}
@@ -72,7 +83,7 @@ export function Hud() {
         </div>
 
         {open ? (
-          <nav id="mobile-nav" className="border-t-2 border-line bg-bg px-4 pb-4 md:hidden" aria-label="Mobile">
+          <nav id="mobile-nav" className="border-t-2 border-line bg-bg px-4 pb-4 lg:hidden" aria-label="Mobile">
             <ul className="grid grid-cols-2 gap-2 pt-3">
               {NAV.map((n) => (
                 <li key={n.href}>
@@ -101,9 +112,9 @@ export function Hud() {
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
         className={`arcade-btn fixed bottom-5 right-5 z-50 !px-3 !py-3 transition-opacity sm:bottom-8 sm:right-8 ${
-          score > 600 ? "opacity-100" : "pointer-events-none opacity-0"
+          score > 600 && !arcadeVisible ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
-        tabIndex={score > 600 ? 0 : -1}
+        tabIndex={score > 600 && !arcadeVisible ? 0 : -1}
       >
         ▲ <span className="hidden sm:inline">Top</span>
       </a>
